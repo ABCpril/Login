@@ -122,7 +122,16 @@ public class Register extends AppCompatActivity {
         pDialog.setMessage("Registering ...");
         if (!pDialog.isShowing()) pDialog.show();
         //Todo: Need to check Internet connection
-        new DownloadData().execute(name, email, password);
+        if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
+            Log.d("REG", "Internet is OK");
+            Toast.makeText(Register.this, "Internet is OK！", Toast.LENGTH_LONG).show();
+            new DownloadData().execute(name, email, password);
+
+        } else {
+            Log.d("REG", "Internet is off");
+            Toast.makeText(Register.this, "Internet is off！", Toast.LENGTH_LONG).show();
+        }
+
 
 
     }

@@ -112,15 +112,34 @@ public class Login extends AppCompatActivity {
             loginButton.setClickable(false);
 
             //Todo : ensure the user has Internet connection
+            if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
+                Log.d("LOGIN", "Internet is OK");
+                Toast.makeText(Login.this, "Internet is OK！", Toast.LENGTH_LONG).show();
 
-            // Display the progress Dialog
-            progressDialog.setMessage("Logging in ...");
-            if (!progressDialog.isShowing())
-                progressDialog.show();
+                // Display the progress Dialog
+                progressDialog.setMessage("Logging in ...");
+                if (!progressDialog.isShowing())
+                    progressDialog.show();
 
-            //Todo: need to check weather the user has Internet before attempting checking the data
-            // Start fetching the data from the Internet
-            new OnlineCredentialValidation().execute(email,password);
+            } else {
+                Log.d("LOGIN", "Internet is off");
+                Toast.makeText(Login.this, "Internet is off！", Toast.LENGTH_LONG).show();
+            }
+
+
+            //Todo: need to check whether the user has Internet before attempting checking the data
+            if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
+                Log.d("LOGIN2", "Internet is OK");
+                Toast.makeText(Login.this, "Internet is OK！", Toast.LENGTH_LONG).show();
+
+                // Start fetching the data from the Internet
+                new OnlineCredentialValidation().execute(email,password);
+
+            } else {
+                Log.d("LOGIN2", "Internet is off");
+                Toast.makeText(Login.this, "Internet is off！", Toast.LENGTH_LONG).show();
+            }
+
 
 
         } else {
